@@ -14,9 +14,10 @@ export default function SignupForm() {
       <input type="text" name="photo-url" id="" placeholder="Avatar URL"/>
       <input type="email" name="email" id="" placeholder="Email"/>
       <input type="password" name="password" id="" placeholder="Password"/>
-      <DateFields>
-        <MonthField date={100000} />
-
+      <DateFields value={new Date()}>
+        <MonthField />
+        <DayField />
+        <YearField start={2020} end={2021} />
       </DateFields>
     </form>
   )
