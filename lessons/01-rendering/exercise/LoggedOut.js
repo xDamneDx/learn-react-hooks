@@ -4,7 +4,7 @@ import LoginForm from "app/LoginForm"
 import SignupForm from "app/SignupForm"
 import About from "app/About"
 // import LoggedOut from "./LoggedOut.final"
-// export default LoggedOut
+// export default LoggedOut 
 
 export default function LoggedOut() {
   return (
