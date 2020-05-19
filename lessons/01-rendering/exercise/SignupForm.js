@@ -1,24 +1,43 @@
-import React, { Fragment, useState } from "react"
+import React, { Fragment } from "react"
 import VisuallyHidden from "@reach/visually-hidden"
-import { signup } from "app/utils"
-import TabsButton from "app/TabsButton"
 import { FaDumbbell } from "react-icons/fa"
 import { DateFields, MonthField, DayField, YearField } from "app/DateFields"
-// import SignupForm from "./SignupForm.final"
-// export default SignupForm
+
+function TabsButton({ className, children }) {
+  return (
+    <button className={className} type="submit">
+      {children}
+    </button>
+  )
+}
+
+function TextInput({ id, label, type = 'text' }) {
+  return (
+    <Fragment>
+      <VisuallyHidden>
+        <label htmlFor={id}>{label}</label>
+      </VisuallyHidden>
+      <input id={id} placeholder={label} type={type} />
+    </Fragment>
+  )
+}
 
 export default function SignupForm() {
   return (
     <form className="SignupForm">
-      <input type="text" name="display-name" id="" placeholder="Display Name"/>
-      <input type="text" name="photo-url" id="" placeholder="Avatar URL"/>
-      <input type="email" name="email" id="" placeholder="Email"/>
-      <input type="password" name="password" id="" placeholder="Password"/>
+      <TextInput id="displayName" label="Display Name" />
+      <TextInput id="avatarUrl" label="Avatar URL" />
+      <TextInput id="email" label="Email" type="email" />
+      <TextInput id="password" label="Password" type="password" />
       <DateFields value={new Date()}>
         <MonthField />
         <DayField />
         <YearField start={2020} end={2021} />
       </DateFields>
+      <TabsButton className="TabsButton icon_button cta">
+        <FaDumbbell />
+        <span>Submit</span>
+      </TabsButton>
     </form>
   )
 }
