@@ -13,46 +13,46 @@ const MAX_MESSAGE_LENGTH = 200
 // Consider the message length counter. Every time we type, we set state, and
 // then React updates the DOM for us.
 
-export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
-  const [{ auth }] = useAppState()
-  const [message, setMessage] = useState("Ran around the lake.")
-  const messageTooLong = message.length > MAX_MESSAGE_LENGTH
+// export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
+//   const [{ auth }] = useAppState()
+//   const [message, setMessage] = useState("Ran around the lake.")
+//   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
-  function handleMessageChange(event) {
-    setMessage(event.target.value)
-  }
+//   function handleMessageChange(event) {
+//     setMessage(event.target.value)
+//   }
 
-  return (
-    <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
-      {showAvatar && <Avatar uid={auth.uid} size={70} />}
-      <form className="NewPost_form">
-        <textarea
-          className="NewPost_input"
-          placeholder="Tell us about your workout!"
-          value={message}
-          onChange={handleMessageChange}
-        />
-        <div className="NewPost_char_count">
-          <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
-        </div>
-        <RecentPostsDropdown
-          uid={auth.uid}
-          onSelect={message => {
-            setMessage(message)
-          }}
-        />
-        <div className="NewPost_buttons">
-          <Minutes date={date} />
-          <div>
-            <button type="submit" className="icon_button cta">
-              <FaDumbbell /> <span>Post</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  )
-}
+//   return (
+//     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
+//       {showAvatar && <Avatar uid={auth.uid} size={70} />}
+//       <form className="NewPost_form">
+//         <textarea
+//           className="NewPost_input"
+//           placeholder="Tell us about your workout!"
+//           value={message}
+//           onChange={handleMessageChange}
+//         />
+//         <div className="NewPost_char_count">
+//           <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
+//         </div>
+//         <RecentPostsDropdown
+//           uid={auth.uid}
+//           onSelect={message => {
+//             setMessage(message)
+//           }}
+//         />
+//         <div className="NewPost_buttons">
+//           <Minutes date={date} />
+//           <div>
+//             <button type="submit" className="icon_button cta">
+//               <FaDumbbell /> <span>Post</span>
+//             </button>
+//           </div>
+//         </div>
+//       </form>
+//     </div>
+//   )
+// }
 
 /******************************************************************************/
 // What if we wanted to be weird and *we* wanted to update the DOM manually? We
@@ -191,51 +191,51 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
 // A more real-world example is updating the document title. We can easily keep
 // the title in sync with our UI.
 
-// export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
-//   const [{ auth }] = useAppState()
-//   const [message, setMessage] = useState("Ran around the lake.")
-//   const messageTooLong = message.length > MAX_MESSAGE_LENGTH
+export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
+  const [{ auth }] = useAppState()
+  const [message, setMessage] = useState("Ran around the lake.")
+  const messageTooLong = message.length > MAX_MESSAGE_LENGTH
 
-//   function handleMessageChange(event) {
-//     setMessage(event.target.value)
-//   }
+  function handleMessageChange(event) {
+    setMessage(event.target.value)
+  }
 
-//   useEffect(() => {
-//     // manually update the document's title
-//     document.title = "New Post" + (message.length ? `: ${message}` : "")
-//   }, [message])
+  useEffect(() => {
+    // manually update the document's title
+    document.title = "New Post" + (message.length ? `: ${message}` : "")
+  }, [message])
 
-//   return (
-//     <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
-//       {showAvatar && <Avatar uid={auth.uid} size={70} />}
-//       <form className="NewPost_form">
-//         <textarea
-//           className="NewPost_input"
-//           placeholder="Tell us about your workout!"
-//           value={message}
-//           onChange={handleMessageChange}
-//         />
-//         <div className="NewPost_char_count">
-//           <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
-//         </div>
-//         <RecentPostsDropdown
-//           uid={auth.uid}
-//           onSelect={message => {
-//             setMessage(message)
-//           }}
-//         />
-//         <div className="NewPost_buttons">
-//           <Minutes date={date} />
-//           <div>
-//             <button type="submit" className="icon_button cta">
-//               <FaDumbbell /> <span>Post</span>
-//             </button>
-//           </div>
-//         </div>
-//       </form>
-//     </div>
-//   )
-// }
+  return (
+    <div className={"NewPost" + (messageTooLong ? ` ${errorClass}` : "")}>
+      {showAvatar && <Avatar uid={auth.uid} size={70} />}
+      <form className="NewPost_form">
+        <textarea
+          className="NewPost_input"
+          placeholder="Tell us about your workout!"
+          value={message}
+          onChange={handleMessageChange}
+        />
+        <div className="NewPost_char_count">
+          <span>{message.length}</span>/{MAX_MESSAGE_LENGTH}
+        </div>
+        <RecentPostsDropdown
+          uid={auth.uid}
+          onSelect={message => {
+            setMessage(message)
+          }}
+        />
+        <div className="NewPost_buttons">
+          <Minutes date={date} />
+          <div>
+            <button type="submit" className="icon_button cta">
+              <FaDumbbell /> <span>Post</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  )
+}
 
 /******************************************************************************/
 // And don't forget, since hooks are just functions, composing them is just like
