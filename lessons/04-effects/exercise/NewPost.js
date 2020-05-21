@@ -25,7 +25,7 @@ export default function NewPost({ takeFocus, date, onSuccess, showAvatar }) {
     if (takeFocus) {
       messageRef.current.focus()
     } 
-  })
+  }, [takeFocus])
 
   useEffect(() => {
     setLocalStorage(key, message)

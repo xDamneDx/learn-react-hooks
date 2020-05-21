@@ -4,9 +4,21 @@ import { onAuthStateChanged } from 'app/utils'
 import LoggedIn from 'app/LoggedIn'
 import LoggedOut from 'app/LoggedOut'
 
+function useAuth() {
+  const [auth, setAuth] = useState(null)
+  const [authAttempted, setAuthAttempted] = useState(false)
+
+  useEffect(() => onAuthStateChanged(auth => {
+      setAuthAttempted(true)
+      setAuth(auth)
+    }), []
+  )
+
+  return { auth, authAttempted }
+}
+
 export default function App() {
-  const auth = null
-  const authAttempted = false
+  const { auth, authAttempted } = useAuth()
 
   if (!authAttempted) {
     return <p>Authenticating...</p>

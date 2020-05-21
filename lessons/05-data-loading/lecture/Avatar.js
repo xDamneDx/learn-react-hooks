@@ -19,63 +19,63 @@ import ProgressCircle from "app/ProgressCircle"
 // For this Avatar to work, we need to load the user and all of their posts
 // so we can calculate the rings on their avatar. Right now, it's just empty.
 
-export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-  const user = null
-  const posts = null
+// export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
+//   const user = null
+//   const posts = null
 
-  if (!user) {
-    return (
-      <div
-        className={"Avatar empty " + className}
-        style={{ width: size, height: size }}
-        {...rest}
-      />
-    )
-  }
+//   if (!user) {
+//     return (
+//       <div
+//         className={"Avatar empty " + className}
+//         style={{ width: size, height: size }}
+//         {...rest}
+//       />
+//     )
+//   }
 
-  const { photoURL, displayName, goal } = user
-  const stroke = size / 10
+//   const { photoURL, displayName, goal } = user
+//   const stroke = size / 10
 
-  const circles = (() => {
-    if (!posts) return null
-    const minutes = posts && calculateTotalMinutes(posts)
-    const expectedMinutes = posts && calculateExpectedMinutes(user)
-    const progress = (minutes / goal) * 100
-    const expectedProgress = (expectedMinutes / goal) * 100
+//   const circles = (() => {
+//     if (!posts) return null
+//     const minutes = posts && calculateTotalMinutes(posts)
+//     const expectedMinutes = posts && calculateExpectedMinutes(user)
+//     const progress = (minutes / goal) * 100
+//     const expectedProgress = (expectedMinutes / goal) * 100
 
-    return (
-      <ProgressCircle
-        radius={size / 2}
-        stroke={stroke}
-        progress={progress}
-        expectedProgress={expectedProgress}
-        bg={bg}
-      />
-    )
-  })()
+//     return (
+//       <ProgressCircle
+//         radius={size / 2}
+//         stroke={stroke}
+//         progress={progress}
+//         expectedProgress={expectedProgress}
+//         bg={bg}
+//       />
+//     )
+//   })()
 
-  return (
-    <div
-      className={"Avatar " + className}
-      style={{ width: size, height: size }}
-      {...rest}
-    >
-      <div
-        role="img"
-        aria-label={`Avatar for ${displayName}`}
-        className="Avatar_image"
-        style={{
-          backgroundImage: `url(${photoURL})`,
-          width: size - stroke * 2 + 1,
-          height: size - stroke * 2 + 1,
-          top: stroke,
-          left: stroke
-        }}
-      />
-      {circles}
-    </div>
-  )
-}
+//   return (
+//     <div
+//       className={"Avatar " + className}
+//       style={{ width: size, height: size }}
+//       {...rest}
+//     >
+//       <div
+//         role="img"
+//         aria-label={`Avatar for ${displayName}`}
+//         className="Avatar_image"
+//         style={{
+//           backgroundImage: `url(${photoURL})`,
+//           width: size - stroke * 2 + 1,
+//           height: size - stroke * 2 + 1,
+//           top: stroke,
+//           left: stroke
+//         }}
+//       />
+//       {circles}
+//     </div>
+//   )
+// }
 
 /******************************************************************************/
 // Everything in React is the same: if the user clicks, setState, if a network
@@ -393,81 +393,81 @@ export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
 //
 // Watch how easily we can abstract these two behaviors:
 
-// function useUser(uid) {
-//   const [user, setUser] = useState(null)
-//   useEffect(() => {
-//     let current = true
-//     fetchUser(uid).then(user => {
-//       if (current) setUser(user)
-//     })
-//     return () => current = false
-//   }, [uid])
-//   return user
-// }
+function useUser(uid) {
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    let current = true
+    fetchUser(uid).then(user => {
+      if (current) setUser(user)
+    })
+    return () => current = false
+  }, [uid])
+  return user
+}
 
-// function usePosts(uid) {
-//   const [posts, setPosts] = useState(null)
-//   useEffect(() => subscribeToPosts(uid, setPosts), [uid])
-//   return posts
-// }
+function usePosts(uid) {
+  const [posts, setPosts] = useState(null)
+  useEffect(() => subscribeToPosts(uid, setPosts), [uid])
+  return posts
+}
 
-// export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
-//   const user = useUser(uid)
-//   const posts = usePosts(uid)
+export default function Avatar({ uid, size = 50, bg, className, ...rest }) {
+  const user = useUser(uid)
+  const posts = usePosts(uid)
 
-//   if (!user) {
-//     return (
-//       <div
-//         className={"Avatar empty " + className}
-//         style={{ width: size, height: size }}
-//         {...rest}
-//       />
-//     )
-//   }
+  if (!user) {
+    return (
+      <div
+        className={"Avatar empty " + className}
+        style={{ width: size, height: size }}
+        {...rest}
+      />
+    )
+  }
 
-//   const { photoURL, displayName, goal } = user
-//   const stroke = size / 10
+  const { photoURL, displayName, goal } = user
+  const stroke = size / 10
 
-//   const circles = (() => {
-//     if (!posts) return null
-//     const minutes = posts && calculateTotalMinutes(posts)
-//     const expectedMinutes = posts && calculateExpectedMinutes(user)
-//     const progress = (minutes / goal) * 100
-//     const expectedProgress = (expectedMinutes / goal) * 100
+  const circles = (() => {
+    if (!posts) return null
+    const minutes = posts && calculateTotalMinutes(posts)
+    const expectedMinutes = posts && calculateExpectedMinutes(user)
+    const progress = (minutes / goal) * 100
+    const expectedProgress = (expectedMinutes / goal) * 100
 
-//     return (
-//       <ProgressCircle
-//         radius={size / 2}
-//         stroke={stroke}
-//         progress={progress}
-//         expectedProgress={expectedProgress}
-//         bg={bg}
-//       />
-//     )
-//   })()
+    return (
+      <ProgressCircle
+        radius={size / 2}
+        stroke={stroke}
+        progress={progress}
+        expectedProgress={expectedProgress}
+        bg={bg}
+      />
+    )
+  })()
 
-//   return (
-//     <div
-//       className={"Avatar " + className}
-//       style={{ width: size, height: size }}
-//       {...rest}
-//     >
-//       <div
-//         role="img"
-//         aria-label={`Avatar for ${displayName}`}
-//         className="Avatar_image"
-//         style={{
-//           backgroundImage: `url(${photoURL})`,
-//           width: size - stroke * 2 + 1,
-//           height: size - stroke * 2 + 1,
-//           top: stroke,
-//           left: stroke
-//         }}
-//       />
-//       {circles}
-//     </div>
-//   )
-// }
+  return (
+    <div
+      className={"Avatar " + className}
+      style={{ width: size, height: size }}
+      {...rest}
+    >
+      <div
+        role="img"
+        aria-label={`Avatar for ${displayName}`}
+        className="Avatar_image"
+        style={{
+          backgroundImage: `url(${photoURL})`,
+          width: size - stroke * 2 + 1,
+          height: size - stroke * 2 + 1,
+          top: stroke,
+          left: stroke
+        }}
+      />
+      {circles}
+    </div>
+  )
+}
 
 /******************************************************************************/
 // useEffect is able to encapsulate BOTH setup and teardown. Also, it is able to
