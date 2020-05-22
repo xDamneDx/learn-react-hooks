@@ -20,7 +20,7 @@ function TextInput({ id, label, type = "text" }) {
 export default function SignupForm() {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [startDate, setStartDate] = useState(new Date("March 1, 2019"))
+  const [startDate, setStartDate] = useState(new Date())
 
   const handleSignup = async event => {
     event.preventDefault()
@@ -58,12 +58,11 @@ export default function SignupForm() {
         <TextInput id="password" label="Password" />
         <p>
           <span>Start:</span>{" "}
-          <DateFields
-            value={startDate}
-            onChange={setStartDate}
-            start={2018}
-            end={2019}
-          />
+          <DateFields value={startDate} onChange={setStartDate}>
+            <DayField aria-label="Start Day" />{" "}
+            <MonthField aria-label="Start Month" />{" "}
+            <YearField start={2020} end={2021} aria-label="Start year" />
+          </DateFields>
         </p>
         <TabsButton>
           <FaDumbbell />
