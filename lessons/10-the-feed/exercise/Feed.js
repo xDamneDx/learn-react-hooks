@@ -4,7 +4,7 @@ import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
 // import FeedFinal from './Feed.final'
 // export default FeedFinal
 export default Feed
- 
+
 function Feed() {
   return (
     <div className="Feed">
