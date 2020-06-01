@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import FeedPost from "app/FeedPost"
 import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
 // import FeedFinal from './Feed.final'
@@ -6,29 +6,47 @@ import { loadFeedPosts, subscribeToNewFeedPosts } from "app/utils"
 export default Feed
 
 function Feed() {
+  const [posts, setPosts] = useState([]);
+  const [date, setDate] = useState(Date.now());
+  const [quantity, setQuantity] = useState(3); 
+  const [newPosts, setNewPosts] = useState([]);
+
+  useEffect(() => {
+    let isCurrent = true;
+    if (isCurrent) {
+      loadFeedPosts(date, quantity).then(result => setPosts(result));
+    };
+    return () => {
+      isCurrent = false;
+    };
+  }, [date, quantity]);
+
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
+  useEffect(() => {
+    return subscribeToNewFeedPosts(date, setNewPosts)
+  }, [date])
+
   return (
     <div className="Feed">
-      <div className="Feed_button_wrapper">
-        <button className="Feed_new_posts_button icon_button">
-          View 3 New Posts
-        </button>
-      </div>
+      {newPosts.length > 0 && (
+        <div className="Feed_button_wrapper">
+        <button onClick={() => {
+          setDate(Date.now())
+          setQuantity(quantity + newPosts.length)
+        }} className="Feed_new_posts_button icon_button">
+            View {newPosts.length} New Posts
+          </button>
+        </div>
+      )}
 
-      <FeedPost post={fakePost} />
+      {posts.map(post => <FeedPost post={post} key={post.createdAt} />)}
 
       <div className="Feed_button_wrapper">
-        <button className="Feed_new_posts_button icon_button">View More</button>
+        <button onClick={() => setQuantity(quantity + 3)} className="Feed_new_posts_button icon_button">View More</button>
       </div>
     </div>
   )
 }
-
-// you can delete this
-const fakePost = {
-  createdAt: Date.now() - 10000,
-  date: "2019-03-30",
-  message: "Went for a run",
-  minutes: 45,
-  uid: "0BrC0fB6r2Rb5MNxyQxu5EnYacf2"
-}
-
