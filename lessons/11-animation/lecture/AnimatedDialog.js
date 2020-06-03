@@ -5,35 +5,35 @@ import { FaTimes } from "react-icons/fa"
 
 /******************************************************************************/
 // Let's animate the dialog when it opens and closes with react-spring
-export default function AnimatedDialog(props) {
-  const rootRef = useRef(null)
-  if (!rootRef.current) {
-    rootRef.current = document.getElementById("root")
-  }
+// export default function AnimatedDialog(props) {
+//   const rootRef = useRef(null)
+//   if (!rootRef.current) {
+//     rootRef.current = document.getElementById("root")
+//   }
 
-  const opacity = 1
-  const y = 0
-  const blur = props.isOpen ? 8 : 0
+//   const opacity = 1
+//   const y = 0
+//   const blur = props.isOpen ? 8 : 0
 
-  useEffect(() => {
-    rootRef.current.style.filter = `blur(${blur}px)`
-  }, [blur])
+//   useEffect(() => {
+//     rootRef.current.style.filter = `blur(${blur}px)`
+//   }, [blur])
 
-  return props.isOpen ? (
-    <DialogOverlay style={{ opacity }} onDismiss={props.onDismiss}>
-      <DialogContent
-        style={{
-          transform: `translate3d(0px, ${y}px, 0px)`
-        }}
-      >
-        {props.children}
-        <button className="Dialog_close icon_button" onClick={props.onDismiss}>
-          <FaTimes aria-label="Close new post dialog" />
-        </button>
-      </DialogContent>
-    </DialogOverlay>
-  ) : null
-}
+//   return props.isOpen ? (
+//     <DialogOverlay style={{ opacity }} onDismiss={props.onDismiss}>
+//       <DialogContent
+//         style={{
+//           transform: `translate3d(0px, ${y}px, 0px)`
+//         }}
+//       >
+//         {props.children}
+//         <button className="Dialog_close icon_button" onClick={props.onDismiss}>
+//           <FaTimes aria-label="Close new post dialog" />
+//         </button>
+//       </DialogContent>
+//     </DialogOverlay>
+//   ) : null
+// }
 
 /******************************************************************************/
 // I like to start with just static values first, as you can we've got 3 things
@@ -127,49 +127,49 @@ export default function AnimatedDialog(props) {
 // called for every frame of the animation, allowing us to synchronize this
 // animation to things outside of this component
 
-// animated.DialogOverlay = animated(DialogOverlay)
-// animated.DialogContent = animated(DialogContent)
+animated.DialogOverlay = animated(DialogOverlay)
+animated.DialogContent = animated(DialogContent)
 
-// export default function AnimatedDialog(props) {
-//   const rootRef = useRef(null)
-//   if (!rootRef.current) {
-//     rootRef.current = document.getElementById("root")
-//   }
+export default function AnimatedDialog(props) {
+  const rootRef = useRef(null)
+  if (!rootRef.current) {
+    rootRef.current = document.getElementById("root")
+  }
 
-//   const transitions = useTransition(props.isOpen ? props : false, null, {
-//     from: { opacity: 0, y: -10, blur: 0 },
-//     enter: { opacity: 1, y: 0, blur: 8 },
-//     leave: { opacity: 0, y: 10, blur: 0 },
-//     onFrame: (item, state, { blur }) => {
-//       if (item.isOpen) rootRef.current.style.filter = `blur(${blur}px)`
-//     }
-//   })
+  const transitions = useTransition(props.isOpen ? props : false, null, {
+    from: { opacity: 0, y: -10, blur: 0 },
+    enter: { opacity: 1, y: 0, blur: 8 },
+    leave: { opacity: 0, y: 10, blur: 0 },
+    onFrame: (item, state, { blur }) => {
+      if (item.isOpen) rootRef.current.style.filter = `blur(${blur}px)`
+    }
+  })
 
-//   return transitions.map(
-//     ({ item, key, props: { opacity, y } }) =>
-//       item.isOpen && (
-//         <animated.DialogOverlay
-//           key={key}
-//           style={{ opacity }}
-//           onDismiss={item.onDismiss}
-//         >
-//           <animated.DialogContent
-//             style={{
-//               transform: y.interpolate(y => `translate3d(0px, ${y}px, 0px)`)
-//             }}
-//           >
-//             {item.children}
-//             <button
-//               className="Dialog_close icon_button"
-//               onClick={item.onDismiss}
-//             >
-//               <FaTimes aria-label="Close new post dialog" />
-//             </button>
-//           </animated.DialogContent>
-//         </animated.DialogOverlay>
-//       )
-//   )
-// }
+  return transitions.map(
+    ({ item, key, props: { opacity, y } }) =>
+      item.isOpen && (
+        <animated.DialogOverlay
+          key={key}
+          style={{ opacity }}
+          onDismiss={item.onDismiss}
+        >
+          <animated.DialogContent
+            style={{
+              transform: y.interpolate(y => `translate3d(0px, ${y}px, 0px)`)
+            }}
+          >
+            {item.children}
+            <button
+              className="Dialog_close icon_button"
+              onClick={item.onDismiss}
+            >
+              <FaTimes aria-label="Close new post dialog" />
+            </button>
+          </animated.DialogContent>
+        </animated.DialogOverlay>
+      )
+  )
+}
 
 /******************************************************************************/
 // Alright, now lets look at adding transitions between two different elements

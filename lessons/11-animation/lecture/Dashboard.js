@@ -32,52 +32,52 @@ import NewPost from "app/NewPost"
 // 1. Time-based on a bezier curve (like CSS transitions)
 // 2. Physics based with a spring
 
-function Day({
-  user,
-  day,
-  showMonth,
-  isOwner,
-  onNewPost,
-  hasNewPost,
-  modalIsOpen,
-  onAnimatedTextRest
-}) {
-  const dayIsFuture = isFuture(day.date)
-  const totalMinutes = calculateTotalMinutes(day.posts)
-  // const animateMinutes = hasNewPost && !modalIsOpen
-  const { location } = useLocation()
+// function Day({
+//   user,
+//   day,
+//   showMonth,
+//   isOwner,
+//   onNewPost,
+//   hasNewPost,
+//   modalIsOpen,
+//   onAnimatedTextRest
+// }) {
+//   const dayIsFuture = isFuture(day.date)
+//   const totalMinutes = calculateTotalMinutes(day.posts)
+//   // const animateMinutes = hasNewPost && !modalIsOpen
+//   const { location } = useLocation()
 
-  return (
-    <div className={"Day" + (totalMinutes ? "" : " Day_no_minutes")}>
-      <div className="Day_date">
-        {showMonth && (
-          <div className="Day_month">{formatDate(day.date, "MMM")}</div>
-        )}
-        <div className="Day_number">{formatDate(day.date, "DD")}</div>
-      </div>
-      <div className="Day_minutes">
-        {totalMinutes ? (
-          <Link
-            className="Day_link"
-            href={`/${user.uid}/${formatDate(day.date, DATE_FORMAT)}`}
-            state={{
-              fromCalendar: true,
-              ...location.state
-            }}
-          >
-            <span children={totalMinutes} className="Calendar_minutes_text" />
-          </Link>
-        ) : dayIsFuture ? (
-          <span className="Calendar_future" />
-        ) : isOwner ? (
-          <button onClick={onNewPost} className="Calendar_add_post_button">
-            <FaPlus />
-          </button>
-        ) : null}
-      </div>
-    </div>
-  )
-}
+//   return (
+//     <div className={"Day" + (totalMinutes ? "" : " Day_no_minutes")}>
+//       <div className="Day_date">
+//         {showMonth && (
+//           <div className="Day_month">{formatDate(day.date, "MMM")}</div>
+//         )}
+//         <div className="Day_number">{formatDate(day.date, "DD")}</div>
+//       </div>
+//       <div className="Day_minutes">
+//         {totalMinutes ? (
+//           <Link
+//             className="Day_link"
+//             href={`/${user.uid}/${formatDate(day.date, DATE_FORMAT)}`}
+//             state={{
+//               fromCalendar: true,
+//               ...location.state
+//             }}
+//           >
+//             <span children={totalMinutes} className="Calendar_minutes_text" />
+//           </Link>
+//         ) : dayIsFuture ? (
+//           <span className="Calendar_future" />
+//         ) : isOwner ? (
+//           <button onClick={onNewPost} className="Calendar_add_post_button">
+//             <FaPlus />
+//           </button>
+//         ) : null}
+//       </div>
+//     </div>
+//   )
+// }
 
 /******************************************************************************/
 // Let's check out interpolating a value with a time based curve. And to
@@ -250,76 +250,76 @@ function Day({
 // Would be nice to be able to stop listening until we're done adding.
 //
 // [open usePosts.js]
-// import { tween } from "app/utils"
+import { tween } from "app/utils"
 
-// function AnimatedText({ children, ...props }) {
-//   const progress = useTween(2000)
-//   const value = Math.round(progress * children)
-//   return <span {...props}>{value}</span>
-// }
+function AnimatedText({ children, ...props }) {
+  const progress = useTween(2000)
+  const value = Math.round(progress * children)
+  return <span {...props}>{value}</span>
+}
 
-// function useTween(endValue) {
-//   const [value, setValue] = useState(0)
-//   useEffect(() => {
-//     return tween(endValue, (value, done) => {
-//       if (!done) setValue(value)
-//     })
-//   }, [endValue])
-//   return value
-// }
+function useTween(endValue) {
+  const [value, setValue] = useState(0)
+  useEffect(() => {
+    return tween(endValue, (value, done) => {
+      if (!done) setValue(value)
+    })
+  }, [endValue])
+  return value
+}
 
-// function Day({
-//   user,
-//   day,
-//   showMonth,
-//   isOwner,
-//   onNewPost,
-//   hasNewPost,
-//   modalIsOpen,
-//   onAnimatedTextRest
-// }) {
-//   const dayIsFuture = isFuture(day.date)
-//   const totalMinutes = calculateTotalMinutes(day.posts)
-//   const animateMinutes = hasNewPost && !modalIsOpen
-//   const { location } = useLocation()
+function Day({
+  user,
+  day,
+  showMonth,
+  isOwner,
+  onNewPost,
+  hasNewPost,
+  modalIsOpen,
+  onAnimatedTextRest
+}) {
+  const dayIsFuture = isFuture(day.date)
+  const totalMinutes = calculateTotalMinutes(day.posts)
+  const animateMinutes = hasNewPost && !modalIsOpen
+  const { location } = useLocation()
 
-//   return (
-//     <div className={"Day" + (totalMinutes ? "" : " Day_no_minutes")}>
-//       <div className="Day_date">
-//         {showMonth && (
-//           <div className="Day_month">{formatDate(day.date, "MMM")}</div>
-//         )}
-//         <div className="Day_number">{formatDate(day.date, "DD")}</div>
-//       </div>
-//       <div className="Day_minutes">
-//         {totalMinutes ? (
-//           <Link
-//             className="Day_link"
-//             href={`/${user.uid}/${formatDate(day.date, DATE_FORMAT)}`}
-//             state={{
-//               fromCalendar: true,
-//               ...location.state
-//             }}
-//           >
-//             {animateMinutes ? (
-//               <AnimatedText className="Calendar_minutes_text">
-//                 {totalMinutes}
-//               </AnimatedText>
-//             ) : (
-//               <span className="Calendar_minutes_text">{totalMinutes}</span>
-//             )}
-//           </Link>
-//         ) : dayIsFuture ? (
-//           <span className="Calendar_future" />
-//         ) : isOwner ? (
-//           <button onClick={onNewPost} className="Calendar_add_post_button">
-//             <FaPlus />
-//           </button>
-//         ) : null}
-//       </div>
-//     </div>
-//   )
-// }
+  return (
+    <div className={"Day" + (totalMinutes ? "" : " Day_no_minutes")}>
+      <div className="Day_date">
+        {showMonth && (
+          <div className="Day_month">{formatDate(day.date, "MMM")}</div>
+        )}
+        <div className="Day_number">{formatDate(day.date, "DD")}</div>
+      </div>
+      <div className="Day_minutes">
+        {totalMinutes ? (
+          <Link
+            className="Day_link"
+            href={`/${user.uid}/${formatDate(day.date, DATE_FORMAT)}`}
+            state={{
+              fromCalendar: true,
+              ...location.state
+            }}
+          >
+            {animateMinutes ? (
+              <AnimatedText className="Calendar_minutes_text">
+                {totalMinutes}
+              </AnimatedText>
+            ) : (
+              <span className="Calendar_minutes_text">{totalMinutes}</span>
+            )}
+          </Link>
+        ) : dayIsFuture ? (
+          <span className="Calendar_future" />
+        ) : isOwner ? (
+          <button onClick={onNewPost} className="Calendar_add_post_button">
+            <FaPlus />
+          </button>
+        ) : null}
+      </div>
+    </div>
+  )
+}
 
 /******************************************************************************/
 export default function Dashboard() {
