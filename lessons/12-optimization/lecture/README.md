@@ -14,4 +14,3 @@
   - make it huge (don't forget the CSS for the height)
   - start memoing everything
   - useCallback (just a useMemo shortcut for functions)
-
